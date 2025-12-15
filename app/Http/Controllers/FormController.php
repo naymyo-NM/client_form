@@ -20,7 +20,7 @@ class FormController extends Controller
             [
                 'name.required' => 'အမည်ဖြည့်ရန် လိုအပ်ပါသည်။',
                 'agree.required' => 'စည်းကမ်းချက်များအား သဘောတူညီကြောင်း ဖြည့်ရန် လိုအပ်ပါသည်။',
-                'g-recaptcha-response.required' => 'reCAPTCHA ကို အတည်ပြုပါ',
+                'g-recaptcha-response.required' => 'Robot မဟုတ်ကြောင်း အတည်ပြုပေးပါ',
             ]
         );
 

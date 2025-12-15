@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8">
     <title>Application Form</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -185,14 +186,18 @@
                
             </div>
     
-                           <div class="g-recaptcha" 
-                                data-sitekey="{{ config('recaptcha.site_key') }}">
-                            </div>
+                       
+                            <div class="g-recaptcha" data-sitekey="{{ config('recaptcha.site_key') }}"></div>
+                            @if ($errors->has('g-recaptcha-response'))
+                                <span class="text-danger">
+                                    <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                </span>
+                            @endif
 
                            
 
 
-            <!-- Submit -->
+    
             <button type="submit" class="btn btn-primary w-100 fw-bold">
                 လက်ခံပါသည်
             </button>
@@ -203,6 +208,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </body>
 </html>

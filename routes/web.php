@@ -5,5 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', [FormController::class, 'index'])->name('form.index');
-Route::post('/form', [FormController::class, 'store'])->name('form.store');
+
+
+Route::middleware(['throttle:forms'])->group(function () {
+    Route::get('/', [FormController::class, 'index'])->name('form.index');
+    Route::post('/form', [FormController::class, 'store'])->name('form.store');
+});
