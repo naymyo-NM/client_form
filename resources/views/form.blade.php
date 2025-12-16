@@ -190,7 +190,7 @@
                         @endif
                        
                         
-            <button type="submit" class="btn btn-primary w-100 fw-bold">
+            <button type="submit" id="submit-btn" class="btn btn-primary w-100 fw-bold" disabled>
                 လက်ခံပါသည်
             </button>
 
@@ -200,6 +200,21 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const agreeCheckbox = document.getElementById('agree');
+        const submitButton = document.getElementById('submit-btn');
+
+        function toggleSubmitButton() {
+            submitButton.disabled = !agreeCheckbox.checked;
+        }
+
+        agreeCheckbox.addEventListener('change', toggleSubmitButton);
+        
+    
+        toggleSubmitButton();
+    });
+</script>
 
 
 </body>
