@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Form;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Rules\ReCaptcha;
 
 class FormController extends Controller
 {
     public function store(Request $request)
     {
-        $validatedData =  $request->validate(
+        $validatedData = $request->validate(
             [
                 'name' => 'required|string|max:255',
                 'agree' => 'required',
-                'g-recaptcha-response' => 'required',
+                'g-recaptcha-response' => ['required', new ReCaptcha]
             ],
 
             [
@@ -23,23 +24,6 @@ class FormController extends Controller
                 'g-recaptcha-response.required' => 'Robot မဟုတ်ကြောင်း အတည်ပြုပေးပါ',
             ]
         );
-
-
-        $response = Http::asForm()->post(
-            'https://www.google.com/recaptcha/api/siteverify',
-            [
-                'secret' => config('recaptcha.secret_key'),
-                'response' => $request->input('g-recaptcha-response'),
-                'remoteip' => $request->ip(),
-            ]
-        );
-
-        if (! $response->json('success')) {
-
-            return back()->withErrors([
-                'g-recaptcha-response' => 'reCAPTCHA verification failed. Please try again.'
-            ])->withInput();
-        }
 
         Form::create([
             'name' => $validatedData['name'],
