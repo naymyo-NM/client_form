@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Form;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use App\Rules\ReCaptcha;
 
 class FormController extends Controller

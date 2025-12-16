@@ -69,7 +69,7 @@
         a[aria-expanded="true"] .show-more { display: none; }
 
     </style>
-    <script src="https://www.google.com/recaptcha/api.js?render={{ env('GOOGLE_RECAPTCHA_KEY') }}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -88,7 +88,7 @@
     </div>
 @endif
 
-        <form action="{{ route('form.store') }}" method="POST" id="clientForm">
+        <form action="{{ route('form.store') }}" method="POST" >
             @csrf
 
             <!-- NAME -->
@@ -183,19 +183,13 @@
 
                
             </div>
-    
+                  <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
+
+                        @if ($errors->has('g-recaptcha-response'))
+                            <span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span>
+                        @endif
                        
-                            <div class="g-recaptcha" data-sitekey="{{ config('recaptcha.site_key') }}"></div>
-                            @if ($errors->has('g-recaptcha-response'))
-                                <span class="text-danger">
-                                    <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
-                                </span>
-                            @endif
-
-                           
-
-
-    
+                        
             <button type="submit" class="btn btn-primary w-100 fw-bold">
                 လက်ခံပါသည်
             </button>
@@ -206,29 +200,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript">
 
-    $('#clientForm').submit(function(event) {
-
-        event.preventDefault();
-
-    
-
-        grecaptcha.ready(function() {
-
-            grecaptcha.execute("{{ env('GOOGLE_RECAPTCHA_KEY') }}", {action: 'subscribe_newsletter'}).then(function(token) {
-
-                $('#clientForm').prepend('<input type="hidden" name="token" value="' + token + '">');
-
-                $('#clientForm').unbind('submit').submit();
-
-            });;
-
-        });
-
-    });
-
-</script>
 
 </body>
 </html>
